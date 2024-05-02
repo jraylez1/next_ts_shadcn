@@ -1,12 +1,19 @@
-import Image from 'next/image'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import Card from './Card'
+'use client'
+
+import Link from 'next/link'
+import ButtonRedirect from './components/ButtonRedirect'
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Card />
-      <Image src="/images/image.jpg" alt="art" width={300} height={300} quality={100} />
+    <main>
+      <ul>
+        <li>
+          <Link href={'/login'}>login</Link>
+        </li>
+        <li>
+          <Link href={'/register'}>register</Link>
+        </li>
+      </ul>
+      <ButtonRedirect />
     </main>
   )
 }
