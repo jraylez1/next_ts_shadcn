@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import envConfig from '@/config'
 const formSchema = z
   .object({
     name: z.string().trim().min(2).max(256),
@@ -36,14 +37,20 @@ export default function RegisterForm() {
     }
   })
 
-  function onSubmit(values: registerBodyType) {
-    console.log(values)
+  async function onSubmit(values: registerBodyType) {
+    const result = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/register`, {
+      method: 'POST',
+      body: JSON.stringify(values),
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }).then((res) => res.json())
+    console.log(result)
   }
   return (
     <div>
-      <h1>Đăng ký</h1>
       <Form {...registerForm}>
-        <form onSubmit={registerForm.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={registerForm.handleSubmit(onSubmit)} className="space-y-2 flex-shrink-0 w-[600px]">
           <FormField
             control={registerForm.control}
             name="name"
@@ -96,7 +103,9 @@ export default function RegisterForm() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className="!mt-8 w-full">
+            Submit
+          </Button>
         </form>
       </Form>
     </div>
